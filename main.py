@@ -103,7 +103,10 @@ def performance_metrics(data):
     max_drawdown = drawdown.min()
     
     # Sharpe Ratio (assuming risk-free rate ~0 for simplicity)
-    sharpe_ratio = data['Daily Return'].mean() / data['Daily Return'].std() * (trading_days ** 0.5)
+    if data['Daily Return'].std() != 0 and not data['Daily Return'].std() is None:
+         sharpe_ratio = data['Daily Return'].mean() / data['Daily Return'].std() * (trading_days ** 0.5)
+    else:
+         sharpe_ratio = float('nan')  # or 0, if you'd rather default to 0
     
     print(f"Total Return: {total_return:.2%}")
     print(f"Annualized Return: {annualized_return:.2%}")
