@@ -21,8 +21,8 @@ import warnings
 
 # Import our modules
 from main import MovingAverageCrossoverStrategy
-from multi_asset_strategy import MultiAssetPortfolioStrategy
-from realtime_trading import RealTimeDataProvider, DemoTradingEngine, RealTimeTradingStrategy
+from multi_asset import MultiAssetPortfolioStrategy
+from live_trading import RealTimeDataProvider, DemoTradingEngine, RealTimeTradingStrategy
 from ml_integration import MLTradingStrategy, FeatureEngineering
 
 warnings.filterwarnings('ignore')
@@ -137,7 +137,7 @@ if 'ml_models_trained' not in st.session_state:
 
 def main():
     # Main header
-    st.markdown('<h1 class="main-header">🚀 Advanced Algorithmic Trading Platform</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header"> Advanced Algorithmic Trading Platform</h1>', unsafe_allow_html=True)
     
     # Strategy type selector
     st.markdown("### 🎯 Select Trading Strategy Type")
@@ -179,7 +179,7 @@ def render_single_asset_interface():
         period = period_options[st.selectbox("Time Period", list(period_options.keys()), index=1)]
         
         # Moving average parameters
-        st.subheader("📊 Technical Parameters")
+        st.subheader(" Technical Parameters")
         col1, col2 = st.columns(2)
         with col1:
             short_ma = st.slider("Short MA", 5, 50, 20)
@@ -191,7 +191,7 @@ def render_single_asset_interface():
             return
         
         # Risk management
-        st.subheader("🛡️ Risk Management")
+        st.subheader(" Risk Management")
         initial_capital = st.number_input("Initial Capital ($)", min_value=1000, value=100000, step=1000)
         transaction_cost = st.slider("Transaction Cost (%)", 0.0, 1.0, 0.1, 0.1) / 100
         position_size = st.slider("Position Size (%)", 10, 100, 100, 10) / 100
@@ -209,7 +209,7 @@ def render_single_asset_interface():
     
     # Main analysis
     if analyze_button:
-        with st.spinner(f"🔄 Analyzing {ticker} strategy..."):
+        with st.spinner(f" Analyzing {ticker} strategy..."):
             try:
                 # Initialize and run strategy
                 strategy = MovingAverageCrossoverStrategy(short_window=short_ma, long_window=long_ma)
@@ -217,7 +217,7 @@ def render_single_asset_interface():
                 # Download and process data
                 data = strategy.download_data(ticker, period)
                 if data.empty:
-                    st.error(f"❌ No data found for {ticker}")
+                    st.error(f" No data found for {ticker}")
                     return
                 
                 strategy.calculate_technical_indicators()
@@ -234,7 +234,7 @@ def render_single_asset_interface():
                 display_enhanced_single_asset_results(strategy, metrics, ticker)
                 
             except Exception as e:
-                st.error(f"❌ Error: {str(e)}")
+                st.error(f"Error: {str(e)}")
     else:
         display_single_asset_welcome()
 
@@ -254,7 +254,7 @@ def render_multi_asset_interface():
         st.header("📊 Portfolio Configuration")
         
         # Asset selection
-        st.subheader("🎯 Asset Selection")
+        st.subheader("Asset Selection")
         
         # Popular portfolios
         portfolio_presets = {
@@ -285,7 +285,7 @@ def render_multi_asset_interface():
             tickers = tickers[:10]
         
         # Portfolio parameters
-        st.subheader("⚙️ Parameters")
+        st.subheader("Parameters")
         period = st.selectbox("Time Period", ["1y", "2y", "3y", "5y"], index=1)
         
         rebalance_freq = st.selectbox(
@@ -301,16 +301,16 @@ def render_multi_asset_interface():
         )
         
         # Risk parameters
-        st.subheader("🛡️ Risk Settings")
+        st.subheader("Risk Settings")
         portfolio_capital = st.number_input("Portfolio Capital ($)", min_value=10000, value=100000, step=5000)
         rebalance_cost = st.slider("Rebalancing Cost (%)", 0.0, 1.0, 0.05, 0.05) / 100
         
-        analyze_portfolio = st.button("🎯 Analyze Portfolio", use_container_width=True)
+        analyze_portfolio = st.button("Analyze Portfolio", use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
     
     # Main analysis
     if analyze_portfolio:
-        with st.spinner("🔄 Running multi-asset analysis..."):
+        with st.spinner("Running multi-asset analysis..."):
             try:
                 # Initialize multi-asset strategy
                 multi_strategy = MultiAssetPortfolioStrategy(
@@ -330,7 +330,7 @@ def render_multi_asset_interface():
                 display_multi_asset_results(multi_strategy, tickers)
                 
             except Exception as e:
-                st.error(f"❌ Error in portfolio analysis: {str(e)}")
+                st.error(f"Error in portfolio analysis: {str(e)}")
     else:
         display_multi_asset_welcome()
 
@@ -347,10 +347,10 @@ def render_realtime_interface():
     # Sidebar configuration
     with st.sidebar:
         st.markdown('<div class="sidebar-section">', unsafe_allow_html=True)
-        st.header("📡 Real-Time Configuration")
+        st.header("Real-Time Configuration")
         
         # Trading parameters
-        st.subheader("🎯 Trading Setup")
+        st.subheader("Trading Setup")
         rt_tickers = st.multiselect(
             "Select Symbols",
             ["AAPL", "MSFT", "GOOGL", "TSLA", "AMZN", "NVDA", "META"],
@@ -389,7 +389,7 @@ def render_realtime_interface():
         display_realtime_dashboard(rt_tickers, update_interval, demo_capital, demo_commission, rt_short_ma, rt_long_ma)
     elif stop_realtime:
         st.session_state.realtime_active = False
-        st.success("🛑 Real-time demo stopped")
+        st.success("Real-time demo stopped")
     else:
         display_realtime_welcome()
 
@@ -413,7 +413,7 @@ def render_ml_interface():
         ml_period = st.selectbox("Training Period", ["1y", "2y", "3y", "5y"], index=2, key="ml_period")
         
         # ML parameters
-        st.subheader("🧠 Model Settings")
+        st.subheader("Model Settings")
         
         prediction_horizon = st.slider("Prediction Horizon (days)", 1, 10, 5)
         
@@ -436,16 +436,16 @@ def render_ml_interface():
         cross_validation_folds = st.slider("CV Folds", 3, 10, 5)
         
         # Control buttons
-        train_models = st.button("🚀 Train ML Models", use_container_width=True)
+        train_models = st.button("Train ML Models", use_container_width=True)
         
         if ml_ticker in st.session_state.ml_models_trained:
-            run_ml_backtest = st.button("📊 Run ML Backtest", use_container_width=True)
+            run_ml_backtest = st.button("Run ML Backtest", use_container_width=True)
         
         st.markdown('</div>', unsafe_allow_html=True)
     
     # ML analysis
     if train_models:
-        with st.spinner("🤖 Training ML models..."):
+        with st.spinner("Training ML models..."):
             try:
                 # Initialize ML strategy
                 base_strategy = MovingAverageCrossoverStrategy()
@@ -461,17 +461,17 @@ def render_ml_interface():
                 display_ml_training_results(training_results, ml_ticker)
                 
             except Exception as e:
-                st.error(f"❌ ML training error: {str(e)}")
+                st.error(f"ML training error: {str(e)}")
     
     elif ml_ticker in st.session_state.ml_models_trained and 'run_ml_backtest' in locals() and run_ml_backtest:
-        with st.spinner("📊 Running ML backtest..."):
+        with st.spinner("Running ML backtest..."):
             try:
                 ml_strategy = st.session_state.ml_models_trained[ml_ticker]
                 backtest_results = ml_strategy.backtest_ml_strategy(ml_ticker, ml_period)
                 display_ml_backtest_results(ml_strategy, backtest_results, ml_ticker)
                 
             except Exception as e:
-                st.error(f"❌ ML backtest error: {str(e)}")
+                st.error(f"ML backtest error: {str(e)}")
     else:
         display_ml_welcome()
 
@@ -787,7 +787,7 @@ def display_enhanced_single_asset_results(strategy, metrics, ticker):
 def display_multi_asset_results(multi_strategy, tickers):
     """Display multi-asset portfolio results."""
     
-    st.markdown("## 🎯 Portfolio Analysis Results")
+    st.markdown("## Portfolio Analysis Results")
     
     # Portfolio metrics
     portfolio_metrics = multi_strategy.calculate_portfolio_metrics()
