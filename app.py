@@ -20,7 +20,7 @@ from typing import Dict, List, Optional
 import warnings
 
 # Import our modules
-from main import MovingAverageCrossoverStrategy
+from main import moving_avg_strategy
 from multi_asset import MultiAssetPortfolioStrategy
 from live_trading import RealTimeDataProvider, DemoTradingEngine, RealTimeTradingStrategy
 from ml_integration import MLTradingStrategy, FeatureEngineering
