@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
-from main import MovingAverageCrossoverStrategy
+from main import moving_avg_strategy
 import yfinance as yf
 from scipy import stats
 
