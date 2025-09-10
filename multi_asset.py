@@ -9,7 +9,7 @@ import numpy as np
 import yfinance as yf
 from typing import List, Dict, Tuple, Optional
 import logging
-from main import MovingAverageCrossoverStrategy
+from main import moving_avg_strategy
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 import warnings
