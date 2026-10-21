@@ -660,7 +660,7 @@ def display_enhanced_single_asset_results(strategy, metrics, ticker):
         
         with risk_col2:
             # Monthly returns heatmap
-            monthly_returns = strategy.results['Portfolio_Value'].resample('M').last().pct_change() * 100
+            monthly_returns = strategy.results['Portfolio_Value'].resample('ME').last().pct_change() * 100
             
             if len(monthly_returns) > 12:
                 # Create heatmap data
@@ -673,7 +673,7 @@ def display_enhanced_single_asset_results(strategy, metrics, ticker):
                     year_data = []
                     for month in range(1, 13):
                         try:
-                            value = monthly_returns[f'{year}-{month:02d}']
+                            value = monthly_returns[f'{year}-{month:02d}'].iloc[0]
                             year_data.append(value)
                         except (KeyError, IndexError):
                             year_data.append(np.nan)
@@ -716,10 +716,8 @@ def display_enhanced_single_asset_results(strategy, metrics, ticker):
             
             trades_df = strategy.trades.copy()
             trades_df['Date'] = pd.to_datetime(trades_df['Date']).dt.strftime('%Y-%m-%d %H:%M')
-            trades_df['P&L'] = trades_df.apply(
-                lambda row: (row['Price'] - trades_df[trades_df['Type'] == 'BUY']['Price'].iloc[-1]) * row['Shares'] 
-                if row['Type'] == 'SELL' and len(trades_df[trades_df['Type'] == 'BUY']) > 0 else 0, axis=1
-            )
+            last_buy = trades_df['Price'].where(trades_df['Type'] == 'BUY').ffill()
+            trades_df['P&L'] = ((trades_df['Price'] - last_buy) * trades_df['Shares']).where(trades_df['Type'] == 'SELL', 0)
             
             # Style the dataframe
             styled_trades = trades_df.style.format({
@@ -727,7 +725,7 @@ def display_enhanced_single_asset_results(strategy, metrics, ticker):
                 'Value': '${:,.2f}',
                 'Cost': '${:.2f}',
                 'P&L': '${:+,.2f}'
-            }).applymap(
+            }).map(
                 lambda x: 'color: green' if isinstance(x, (int, float)) and x > 0 else 'color: red' if isinstance(x, (int, float)) and x < 0 else '',
                 subset=['P&L']
             )
