@@ -111,7 +111,7 @@ class MovingAverageCrossoverStrategy:
         rsi = 100 - (100 / (1 + rs))
         return rsi
     
-    def generate_signals(self, delay: int = 0) -> pd.DataFrame:
+    def generate_signals(self, delay: int = 1) -> pd.DataFrame:
         """
         Generate trading signals based on moving average crossover strategy.
         
