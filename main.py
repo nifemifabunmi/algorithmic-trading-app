@@ -111,7 +111,7 @@ class MovingAverageCrossoverStrategy:
         rsi = 100 - (100 / (1 + rs))
         return rsi
     
-    def generate_signals(self) -> pd.DataFrame:
+    def generate_signals(self, delay: int = 0) -> pd.DataFrame:
         """
         Generate trading signals based on moving average crossover strategy.
         
@@ -143,6 +143,10 @@ class MovingAverageCrossoverStrategy:
         # Additional filter: only trade when RSI is not in extreme territory
         data.loc[(data['RSI'] > 80) & (data['Position'] == 2), 'Position'] = 0  # Don't buy when overbought
         data.loc[(data['RSI'] < 20) & (data['Position'] == -2), 'Position'] = 0  # Don't sell when oversold
+
+        # A crossover is only known after the close, so act on it `delay` bars later
+        if delay:
+            data['Position'] = data['Position'].shift(delay)
         
         self.data = data
         return data
