@@ -278,7 +278,9 @@ class MovingAverageCrossoverStrategy:
         # Sharpe ratio (assuming 2% risk-free rate)
         risk_free_rate = 0.02
         excess_return = annualized_return - risk_free_rate
-        sharpe_ratio = excess_return / annualized_volatility if annualized_volatility != 0 else 0
+        daily_excess = aligned_portfolio - risk_free_rate / trading_days
+        sharpe_ratio = (daily_excess.mean() / daily_excess.std() * np.sqrt(trading_days)
+                if daily_excess.std() != 0 else 0)
         
         # Sortino ratio (downside deviation)
         downside_returns = aligned_portfolio[aligned_portfolio < 0]
