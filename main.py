@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 # Suppress warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-class moving_avg_strategy:
+class MovingAverageCrossoverStrategy:
     """
     Professional implementation of Moving Average Crossover trading strategy
     with comprehensive backtesting and risk management capabilities.

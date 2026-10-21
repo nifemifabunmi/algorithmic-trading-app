@@ -9,7 +9,7 @@ import numpy as np
 import yfinance as yf
 from typing import List, Dict, Tuple, Optional
 import logging
-from main import moving_avg_strategy
+from main import MovingAverageCrossoverStrategy
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 import warnings
@@ -17,7 +17,7 @@ import warnings
 warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
-class multi_asset_strategy:
+class MultiAssetPortfolioStrategy:
     """
     Multi-asset portfolio implementation with correlation analysis,
     portfolio optimization, and risk management across multiple instruments.

@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
-from main import moving_avg_strategy
+from main import MovingAverageCrossoverStrategy
 import yfinance as yf
 from scipy import stats
 
@@ -198,7 +198,7 @@ class FeatureEngineering:
         
         return targets_df
 
-class trading_strategy:
+class MLTradingStrategy:
     """
     Machine Learning enhanced trading strategy.
     """

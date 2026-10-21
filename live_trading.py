@@ -15,7 +15,7 @@ from typing import Dict, List, Optional, Callable, Any
 from dataclasses import dataclass, field
 from queue import Queue
 import warnings
-from main import moving_avg_strategy
+from main import MovingAverageCrossoverStrategy
 import json
 
 warnings.filterwarnings('ignore')
