@@ -45,3 +45,5 @@ plt.ylabel("Drawdown (%)")
 plt.legend()
 plt.grid(alpha=0.3)
 plt.show()
+
+print(f"Strategy total return: {s.results['Portfolio_Value'].iloc[-1] / 100000 - 1:.2%}")
