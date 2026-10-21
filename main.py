@@ -187,7 +187,7 @@ class MovingAverageCrossoverStrategy:
             if signal == 2:  # Buy signal (signal changed from -1 or 0 to 1)
                 if shares == 0 and cash > 0:  # Only buy if not already holding
                     # Calculate position size
-                    max_shares = int((cash * position_size) // price)
+                    max_shares = int((cash * position_size) // (price * (1 + transaction_cost)))
                     if max_shares > 0:
                         transaction_cost_amount = max_shares * price * transaction_cost
                         if cash >= (max_shares * price + transaction_cost_amount):
