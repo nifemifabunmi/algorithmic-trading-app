@@ -1,4 +1,11 @@
 streamlit
 yfinance
 pandas
+numpy
 matplotlib
+plotly
+scipy
+scikit-learn
+xgboost
+seaborn
+joblib
