@@ -343,6 +343,8 @@ def render_realtime_interface():
         <p>Live market data processing with demo trading capabilities and real-time performance monitoring.</p>
     </div>
     """, unsafe_allow_html=True)
+
+    st.warning("Demo only: prices, P&L and signals on this tab are randomly generated, not market data.")
     
     # Sidebar configuration
     with st.sidebar:
@@ -1101,7 +1103,7 @@ def display_ml_training_results(training_results, ticker):
         st.plotly_chart(fig, use_container_width=True)
         
         # Feature importance (mock for demo)
-        st.markdown("### 🔍 Top Features")
+        st.markdown("### 🔍 Top Features (placeholder data)")
         
         feature_names = ['RSI', 'MACD', 'MA_Ratio_20', 'Volatility_20', 'Momentum_5', 
                         'BB_Position', 'Volume_Ratio', 'Price_Change_10']
